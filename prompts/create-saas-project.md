@@ -280,6 +280,14 @@ As bibliotecas mudam frequentemente. O que funcionava em versões anteriores pod
    - Validação de schemas com Zod
    - Integração nativa com shadcn/ui
 
+9. **Design Responsivo Mobile-First** - Layout adaptativo obrigatório
+   - Abordagem Mobile-First: estilize primeiro para mobile, depois para telas maiores
+   - Breakpoints Tailwind: sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px)
+   - Touch targets mínimos de 44x44px para elementos interativos
+   - Sidebar responsiva: drawer (mobile) → colapsada (tablet) → fixa (desktop)
+   - Testes obrigatórios em múltiplos viewports antes de deploy
+   - Referência: Seção "📱 Design Responsivo (Mobile-First)" neste documento
+
 ### Estrutura de Pastas do Front-end
 
 ```
@@ -411,6 +419,401 @@ O Tailwind CSS v4 usa `@theme` directive ao invés de `tailwind.config.js`:
 - **Loading States**: Skeleton loaders durante carregamento
 - **Error Boundaries**: Tratamento de erros global
 - **Toast Notifications**: Feedback de ações (sonner ou react-hot-toast)
+
+### 📱 Design Responsivo (Mobile-First)
+
+> **OBRIGATÓRIO**: Todo o layout DEVE ser responsivo, funcionando perfeitamente em dispositivos móveis (smartphones), tablets e desktops. Adote a abordagem **Mobile-First**.
+
+#### Filosofia Mobile-First
+
+O design Mobile-First significa construir a interface começando pela menor tela e progressivamente adicionando complexidade para telas maiores. Esta abordagem garante:
+
+- **Performance otimizada**: Dispositivos móveis carregam apenas o essencial
+- **Experiência de usuário consistente**: A interface funciona em qualquer dispositivo
+- **Manutenção simplificada**: Código CSS mais limpo e organizado
+- **SEO melhorado**: Google prioriza sites mobile-friendly
+
+```css
+/* ❌ ERRADO: Desktop-First (começar do grande para o pequeno) */
+.container { width: 1200px; }
+@media (max-width: 768px) { .container { width: 100%; } }
+
+/* ✅ CORRETO: Mobile-First (começar do pequeno para o grande) */
+.container { width: 100%; }
+@media (min-width: 768px) { .container { width: 1200px; } }
+```
+
+#### Breakpoints do Tailwind CSS
+
+Utilize os breakpoints padrão do Tailwind CSS de forma consistente em todo o projeto:
+
+| Breakpoint | Prefixo | Min-Width | Dispositivos Típicos |
+|------------|---------|-----------|----------------------|
+| Default | (nenhum) | 0px | Smartphones pequenos (iPhone SE, Galaxy S) |
+| `sm` | `sm:` | 640px | Smartphones grandes (iPhone Pro Max, landscape) |
+| `md` | `md:` | 768px | Tablets em portrait (iPad Mini, iPad) |
+| `lg` | `lg:` | 1024px | Tablets landscape, laptops pequenos |
+| `xl` | `xl:` | 1280px | Laptops, desktops |
+| `2xl` | `2xl:` | 1536px | Monitores grandes, ultrawide |
+
+**Exemplo de uso Mobile-First com Tailwind:**
+
+```tsx
+{/* Grid responsivo: 1 coluna no mobile, 2 no tablet, 3 no desktop, 4 em telas grandes */}
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+  {items.map(item => <Card key={item.id} {...item} />)}
+</div>
+
+{/* Tipografia responsiva */}
+<h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold">
+  Título Responsivo
+</h1>
+
+{/* Padding/Margin responsivo */}
+<section className="px-4 sm:px-6 md:px-8 lg:px-12 py-6 md:py-10">
+  Conteúdo com espaçamento adaptativo
+</section>
+```
+
+#### Componentes de Layout Responsivo
+
+**1. Sidebar Responsiva (Padrão Drawer/Hamburger)**
+
+```tsx
+// Mobile: Drawer que desliza da esquerda (overlay)
+// Tablet: Sidebar colapsável (ícones apenas)
+// Desktop: Sidebar expandida permanente
+
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export function Sidebar({ isOpen, onClose }: SidebarProps) {
+  return (
+    <>
+      {/* Overlay para mobile */}
+      <div
+        className={cn(
+          "fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity",
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+        onClick={onClose}
+      />
+
+      {/* Sidebar */}
+      <aside
+        className={cn(
+          "fixed left-0 top-0 h-full bg-background border-r z-50",
+          "w-64 transform transition-transform duration-300 ease-in-out",
+          // Mobile: slide in/out
+          "lg:transform-none lg:translate-x-0",
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        {/* Conteúdo da sidebar */}
+      </aside>
+    </>
+  );
+}
+```
+
+**2. Header Responsivo**
+
+```tsx
+export function Header() {
+  return (
+    <header className="sticky top-0 z-30 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="flex h-14 sm:h-16 items-center px-4 sm:px-6">
+        {/* Botão hamburger - apenas mobile/tablet */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="lg:hidden mr-2"
+          onClick={toggleSidebar}
+        >
+          <Menu className="h-5 w-5" />
+        </Button>
+
+        {/* Logo - oculta texto em telas pequenas */}
+        <div className="flex items-center gap-2">
+          <Logo className="h-6 w-6 sm:h-8 sm:w-8" />
+          <span className="hidden sm:inline font-semibold">{{NOME_DO_PROJETO}}</span>
+        </div>
+
+        {/* Spacer */}
+        <div className="flex-1" />
+
+        {/* Ações - adapta para mobile */}
+        <div className="flex items-center gap-2 sm:gap-4">
+          <ThemeToggle />
+          {/* Avatar com dropdown */}
+          <UserNav />
+        </div>
+      </div>
+    </header>
+  );
+}
+```
+
+**3. Layout Principal Responsivo**
+
+```tsx
+export function MainLayout({ children }: { children: React.ReactNode }) {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+
+      {/* Conteúdo principal com margem para sidebar em desktop */}
+      <div className="lg:pl-64">
+        <Header onMenuClick={() => setSidebarOpen(true)} />
+
+        <main className="p-4 sm:p-6 lg:p-8">
+          {/* Container com max-width para legibilidade */}
+          <div className="mx-auto max-w-7xl">
+            {children}
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+}
+```
+
+#### Padrões de UI Responsiva
+
+**Tabelas Responsivas:**
+
+```tsx
+{/* Opção 1: Scroll horizontal em mobile */}
+<div className="overflow-x-auto -mx-4 sm:mx-0">
+  <table className="min-w-full">...</table>
+</div>
+
+{/* Opção 2: Cards em mobile, tabela em desktop */}
+<div className="hidden md:block">
+  <Table>...</Table>
+</div>
+<div className="md:hidden space-y-4">
+  {data.map(item => <MobileCard key={item.id} {...item} />)}
+</div>
+```
+
+**Formulários Responsivos:**
+
+```tsx
+<form className="space-y-4 sm:space-y-6">
+  {/* Campos em linha no desktop, empilhados no mobile */}
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <FormField name="firstName" label="Nome" />
+    <FormField name="lastName" label="Sobrenome" />
+  </div>
+
+  {/* Campo largo sempre */}
+  <FormField name="email" label="Email" />
+
+  {/* Botões: full-width no mobile, auto no desktop */}
+  <div className="flex flex-col sm:flex-row gap-2 sm:justify-end">
+    <Button variant="outline" className="w-full sm:w-auto">Cancelar</Button>
+    <Button type="submit" className="w-full sm:w-auto">Salvar</Button>
+  </div>
+</form>
+```
+
+**Modais/Dialogs Responsivos:**
+
+```tsx
+<Dialog>
+  <DialogContent className={cn(
+    "sm:max-w-md",
+    // Mobile: full-screen ou quase full-screen
+    "max-h-[90vh] overflow-y-auto",
+    "w-[calc(100%-2rem)] sm:w-full rounded-lg"
+  )}>
+    <DialogHeader>
+      <DialogTitle>Título</DialogTitle>
+    </DialogHeader>
+    {/* Conteúdo */}
+  </DialogContent>
+</Dialog>
+```
+
+#### Imagens e Mídia Responsiva
+
+```tsx
+{/* Imagens responsivas com aspect-ratio */}
+<div className="relative aspect-video w-full overflow-hidden rounded-lg">
+  <img
+    src={imageUrl}
+    alt={description}
+    className="object-cover w-full h-full"
+    loading="lazy"
+  />
+</div>
+
+{/* Avatar com tamanhos responsivos */}
+<Avatar className="h-8 w-8 sm:h-10 sm:w-10">
+  <AvatarImage src={user.avatar} />
+  <AvatarFallback>{user.initials}</AvatarFallback>
+</Avatar>
+```
+
+#### Touch-Friendly Design (Mobile UX)
+
+Diretrizes essenciais para interfaces touch:
+
+| Elemento | Tamanho Mínimo | Espaçamento | Justificativa |
+|----------|----------------|-------------|---------------|
+| Botões | 44x44px | 8px entre elementos | Área de toque confortável (Apple HIG) |
+| Links/Ícones | 44x44px | 8px | Evita toques acidentais |
+| Inputs | altura 44px | 12px vertical | Facilita digitação |
+| Checkboxes | 24x24px | 16px | Visibilidade e precisão |
+
+```tsx
+{/* Botão touch-friendly */}
+<Button className="min-h-[44px] min-w-[44px] px-4 py-2">
+  Ação
+</Button>
+
+{/* Lista touch-friendly */}
+<ul className="divide-y">
+  {items.map(item => (
+    <li key={item.id} className="py-3 px-4 min-h-[44px] flex items-center">
+      {item.label}
+    </li>
+  ))}
+</ul>
+```
+
+#### Hooks Úteis para Responsividade
+
+```tsx
+// hooks/useMediaQuery.ts
+import { useState, useEffect } from 'react';
+
+export function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    setMatches(media.matches);
+
+    const listener = (e: MediaQueryListEvent) => setMatches(e.matches);
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, [query]);
+
+  return matches;
+}
+
+// hooks/useBreakpoint.ts
+export function useBreakpoint() {
+  const isMobile = useMediaQuery('(max-width: 639px)');
+  const isTablet = useMediaQuery('(min-width: 640px) and (max-width: 1023px)');
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
+
+  return { isMobile, isTablet, isDesktop };
+}
+
+// Uso:
+function MyComponent() {
+  const { isMobile } = useBreakpoint();
+
+  return isMobile ? <MobileView /> : <DesktopView />;
+}
+```
+
+#### Testes de Responsividade
+
+**Checklist obrigatório antes de considerar uma página pronta:**
+
+- [ ] **iPhone SE (375px)** - Menor smartphone comum
+- [ ] **iPhone 14 Pro (393px)** - Smartphone médio
+- [ ] **iPhone 14 Pro Max (430px)** - Smartphone grande
+- [ ] **iPad Mini (768px)** - Tablet pequeno
+- [ ] **iPad Pro (1024px)** - Tablet grande
+- [ ] **Laptop (1280px)** - Desktop comum
+- [ ] **Desktop (1536px+)** - Monitor grande
+
+**Ferramentas para teste:**
+
+1. **Chrome DevTools**: Device Mode (Ctrl+Shift+M)
+2. **Responsively App**: Visualiza múltiplos dispositivos simultaneamente
+3. **BrowserStack**: Testes em dispositivos reais
+4. **Lighthouse**: Audita acessibilidade e mobile-friendliness
+
+**Testes automatizados com Playwright:**
+
+```typescript
+// e2e/responsive.spec.ts
+import { test, expect } from '@playwright/test';
+
+const viewports = [
+  { name: 'mobile', width: 375, height: 667 },
+  { name: 'tablet', width: 768, height: 1024 },
+  { name: 'desktop', width: 1280, height: 720 },
+];
+
+for (const viewport of viewports) {
+  test(`homepage renders correctly on ${viewport.name}`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    await page.goto('/');
+
+    // Verifica que elementos críticos estão visíveis
+    await expect(page.locator('header')).toBeVisible();
+    await expect(page.locator('main')).toBeVisible();
+
+    // Screenshot para comparação visual
+    await expect(page).toHaveScreenshot(`home-${viewport.name}.png`);
+  });
+}
+```
+
+#### Boas Práticas de Performance Mobile
+
+```tsx
+// 1. Lazy loading de imagens
+<img loading="lazy" src={url} alt={alt} />
+
+// 2. Lazy loading de componentes pesados
+const HeavyChart = lazy(() => import('./HeavyChart'));
+
+// 3. Evite layouts que causam reflow
+// ❌ ERRADO: Altura calculada em JS
+// ✅ CORRETO: Use CSS (aspect-ratio, min-height, etc.)
+
+// 4. Prefira CSS transforms para animações
+// ❌ ERRADO: animate({ left: '100px' })
+// ✅ CORRETO: animate({ transform: 'translateX(100px)' })
+
+// 5. Use will-change com moderação para elementos animados
+<div className="will-change-transform transition-transform">
+  Conteúdo animado
+</div>
+```
+
+#### Acessibilidade em Dispositivos Móveis
+
+```tsx
+// 1. Meta viewport correta (já configurada no index.html do Vite)
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+// 2. Zoom não deve ser desabilitado (acessibilidade)
+// ❌ NUNCA faça: maximum-scale=1.0, user-scalable=no
+
+// 3. Labels visíveis para inputs (não apenas placeholder)
+<label htmlFor="email" className="block text-sm font-medium">
+  Email
+</label>
+<input id="email" type="email" placeholder="seu@email.com" />
+
+// 4. Focus states visíveis para navegação por teclado/switch
+<Button className="focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+  Ação
+</Button>
+```
 
 ---
 
@@ -1626,6 +2029,9 @@ npm run preview      # Preview do build
 - **Estilização**: Tailwind CSS + cn() helper, NUNCA CSS puro
 - **shadcn/ui**: instalar componentes via `npx shadcn-ui@latest add <component>`
 - **Imports**: paths absolutos via `@/` (configurado no vite.config.ts)
+- **Responsividade**: OBRIGATÓRIO Mobile-First; testar em 375px, 768px, 1024px, 1280px
+- **Touch**: Elementos clicáveis min 44x44px; inputs min-height 44px
+- **Layout**: Sidebar drawer (mobile), colapsada (tablet), fixa (desktop)
 
 ## API
 - Base URL: `http://localhost:{{PORTA_API}}/api/v1`
@@ -1767,16 +2173,27 @@ React, Vite, TanStack Query, React Router, shadcn/ui, Zod, Tailwind CSS, React H
 - [ ] Criar layout base (Sidebar + Header)
 
 ### Fase 5: Páginas
-- [ ] Página de Login
-- [ ] Página de Signup
-- [ ] Página de Perfil
-- [ ] Home/Dashboard
+- [ ] Página de Login (responsiva)
+- [ ] Página de Signup (responsiva)
+- [ ] Página de Perfil (responsiva)
+- [ ] Home/Dashboard (responsiva)
 
-### Fase 6: Integração e Testes
+### Fase 6: Responsividade e Layout Adaptativo
+- [ ] Implementar Sidebar responsiva (drawer mobile, colapsável tablet, fixa desktop)
+- [ ] Implementar Header responsivo com menu hamburger
+- [ ] Criar hook `useBreakpoint` para lógica condicional de viewport
+- [ ] Configurar grid system responsivo (1/2/3/4 colunas conforme breakpoint)
+- [ ] Adaptar formulários para mobile (campos empilhados, botões full-width)
+- [ ] Implementar tabelas responsivas (scroll horizontal ou cards em mobile)
+- [ ] Garantir áreas de toque mínimas de 44x44px em elementos interativos
+- [ ] Testar em viewports: 375px, 768px, 1024px, 1280px, 1536px
+- [ ] Validar com Chrome DevTools Device Mode
+- [ ] Verificar que zoom não está desabilitado (acessibilidade)
+
+### Fase 7: Integração e Testes
 - [ ] Testar fluxo completo de autenticação
 - [ ] Testar refresh token
 - [ ] Testar rotas protegidas
-- [ ] Validar responsividade
 - [ ] **[Multi-Tenant]** Testar isolamento entre tenants
 - [ ] **[Híbrido]** Testar routing entre bancos SHARED e DEDICATED
 
@@ -1791,6 +2208,19 @@ React, Vite, TanStack Query, React Router, shadcn/ui, Zod, Tailwind CSS, React H
 4. **Tratamento de Erros**: Implemente error handling consistente em toda a aplicação.
 5. **Logs**: Configure logging adequado (SLF4J no back, console estruturado no front).
 6. **Testes**: Escreva pelo menos testes unitários para os casos de uso críticos.
+7. **Responsividade**: TODO layout DEVE ser responsivo e testado em múltiplos dispositivos.
+
+### 📱 Responsividade e Mobile-First - Atenção Obrigatória:
+- ⚠️ **MOBILE-FIRST**: SEMPRE comece estilizando para mobile e adicione breakpoints para telas maiores
+- ⚠️ **BREAKPOINTS**: Use os breakpoints padrão do Tailwind (sm:640px, md:768px, lg:1024px, xl:1280px, 2xl:1536px)
+- ⚠️ **TOUCH TARGETS**: Elementos clicáveis DEVEM ter no mínimo 44x44px para touch
+- ⚠️ **SIDEBAR**: Mobile usa drawer overlay, tablet usa sidebar colapsada, desktop usa sidebar fixa
+- ⚠️ **TABELAS**: Em mobile, use scroll horizontal ou converta para cards empilhados
+- ⚠️ **FORMULÁRIOS**: Inputs devem ter altura mínima de 44px; botões full-width em mobile
+- ⚠️ **IMAGENS**: Use lazy loading e aspect-ratio para evitar layout shift
+- ⚠️ **TESTES**: Teste em pelo menos 5 viewports (375px, 768px, 1024px, 1280px, 1536px)
+- ⚠️ **ACESSIBILIDADE**: NUNCA desabilite zoom do usuário (user-scalable=no é proibido)
+- ⚠️ **PERFORMANCE**: Evite JavaScript para layouts que CSS pode resolver; use CSS Grid e Flexbox
 
 ### Específicas por Arquitetura de Tenancy
 
