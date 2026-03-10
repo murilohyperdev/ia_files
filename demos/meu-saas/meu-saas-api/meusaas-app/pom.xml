@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.minhaempresa</groupId>
+        <artifactId>meusaas-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>meusaas-app</artifactId>
+    <name>meusaas-app</name>
+    <description>Main class, configs, application.yml, Flyway (bootable)</description>
+
+    <dependencies>
+        <!-- All Internal Modules -->
+        <dependency>
+            <groupId>com.minhaempresa</groupId>
+            <artifactId>meusaas-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.minhaempresa</groupId>
+            <artifactId>meusaas-infrastructure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.minhaempresa</groupId>
+            <artifactId>meusaas-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.minhaempresa</groupId>
+            <artifactId>meusaas-web</artifactId>
+        </dependency>
+
+        <!-- Actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- Flyway -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

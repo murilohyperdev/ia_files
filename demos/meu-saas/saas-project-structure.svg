@@ -1,0 +1,222 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1580" font-family="'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e293b;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="frontGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.08" />
+    </linearGradient>
+    <linearGradient id="backGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#10b981;stop-opacity:0.08" />
+    </linearGradient>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="104%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="1580" fill="url(#bgGrad)" rx="16"/>
+
+  <!-- Header -->
+  <rect x="40" y="30" width="1120" height="80" rx="12" fill="url(#headerGrad)" filter="url(#shadow)"/>
+  <text x="600" y="65" text-anchor="middle" fill="white" font-size="28" font-weight="700" letter-spacing="1">📁 SaaS Full Stack — Estrutura do Projeto</text>
+  <text x="600" y="90" text-anchor="middle" fill="#c7d2fe" font-size="14">React + Spring Boot Multi-Module Maven + PostgreSQL + Redis</text>
+
+  <!-- Root project -->
+  <rect x="40" y="130" width="1120" height="44" rx="8" fill="#334155" filter="url(#shadow)"/>
+  <text x="70" y="158" fill="#f59e0b" font-size="22">📦</text>
+  <text x="100" y="158" fill="#fbbf24" font-size="18" font-weight="700">meu-saas/</text>
+  <text x="280" y="158" fill="#94a3b8" font-size="13" font-style="italic">— Raiz do projeto</text>
+
+  <!-- ========== FRONTEND SECTION ========== -->
+  <rect x="60" y="190" width="1080" height="340" rx="10" fill="url(#frontGrad)" stroke="#0ea5e9" stroke-width="1" stroke-opacity="0.3"/>
+  <rect x="60" y="190" width="1080" height="36" rx="10" fill="#0ea5e9" fill-opacity="0.2"/>
+  <text x="90" y="214" fill="#38bdf8" font-size="16" font-weight="700">🎨 FRONT-END — meu-saas-web/</text>
+  <text x="680" y="214" fill="#7dd3fc" font-size="12">React 18 + TypeScript + Vite + Tailwind + shadcn/ui</text>
+
+  <!-- Frontend tree -->
+  <text x="100" y="252" fill="#e2e8f0" font-size="14" font-family="'JetBrains Mono', 'Fira Code', monospace">
+    <tspan x="100" dy="0">├── src/</tspan>
+    <tspan x="100" dy="24">│   ├── components/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="12">Componentes reutilizáveis + shadcn/ui</tspan>
+    <tspan x="100" dy="24">│   ├── pages/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="12">Páginas da aplicação</tspan>
+    <tspan x="100" dy="24">│   ├── hooks/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="12">useAuth, useMerchant, custom hooks</tspan>
+    <tspan x="100" dy="24">│   ├── services/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="12">Axios instance + chamadas API</tspan>
+    <tspan x="100" dy="24">│   ├── contexts/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="12">AuthContext, ThemeContext, TenantContext</tspan>
+    <tspan x="100" dy="24">│   ├── types/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="12">TypeScript interfaces e types</tspan>
+    <tspan x="100" dy="24">│   ├── lib/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="12">Utilitários (cn, formatters)</tspan>
+    <tspan x="100" dy="24">│   └── routes/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="12">Configuração de rotas</tspan>
+    <tspan x="100" dy="24">├── package.json</tspan>
+    <tspan x="100" dy="24">├── vite.config.ts</tspan>
+    <tspan x="100" dy="24">└── CLAUDE.md</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="12">Convenções específicas do frontend</tspan>
+  </text>
+
+  <!-- ========== BACKEND SECTION ========== -->
+  <rect x="60" y="548" width="1080" height="870" rx="10" fill="url(#backGrad)" stroke="#22c55e" stroke-width="1" stroke-opacity="0.3"/>
+  <rect x="60" y="548" width="1080" height="36" rx="10" fill="#22c55e" fill-opacity="0.2"/>
+  <text x="90" y="572" fill="#4ade80" font-size="16" font-weight="700">☕ BACK-END — meu-saas-api/</text>
+  <text x="680" y="572" fill="#86efac" font-size="12">Java 21 + Spring Boot 3.2 + Multi-Module Maven</text>
+
+  <!-- Module: core -->
+  <rect x="80" y="596" width="1040" height="170" rx="8" fill="#1e293b" fill-opacity="0.7" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="100" y="620" fill="#fbbf24" font-size="15" font-weight="700">🏗️ core/</text>
+  <text x="200" y="620" fill="#94a3b8" font-size="12">Domain — núcleo da aplicação (sem dependências internas)</text>
+  <text x="120" y="650" fill="#e2e8f0" font-size="13" font-family="'JetBrains Mono', 'Fira Code', monospace">
+    <tspan x="120" dy="0">├── entity/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="11">Merchant, User, Group, Rule, RefreshToken</tspan>
+    <tspan x="120" dy="22">├── repository/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="11">Spring Data JPA interfaces</tspan>
+    <tspan x="120" dy="22">├── service/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="11">AuthService, UserService, MerchantService...</tspan>
+    <tspan x="120" dy="22">├── exception/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="11">BusinessException, ResourceNotFoundException</tspan>
+    <tspan x="120" dy="22">└── util/</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="11">Constants, DateUtils</tspan>
+  </text>
+
+  <!-- Module: infrastructure -->
+  <rect x="80" y="778" width="500" height="150" rx="8" fill="#1e293b" fill-opacity="0.7" stroke="#8b5cf6" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="100" y="802" fill="#a78bfa" font-size="15" font-weight="700">🔧 infrastructure/</text>
+  <text x="300" y="802" fill="#94a3b8" font-size="12">→ depende de core</text>
+  <text x="120" y="832" fill="#e2e8f0" font-size="13" font-family="'JetBrains Mono', 'Fira Code', monospace">
+    <tspan x="120" dy="0">├── persistence/</tspan>
+    <tspan x="340" dy="0" fill="#64748b" font-size="11">Custom queries</tspan>
+    <tspan x="120" dy="22">├── cache/</tspan>
+    <tspan x="340" dy="0" fill="#64748b" font-size="11">RedisConfig</tspan>
+    <tspan x="120" dy="22">└── tenant/</tspan>
+    <tspan x="340" dy="0" fill="#64748b" font-size="11">TenantContext, Filter, Aspect</tspan>
+  </text>
+
+  <!-- Module: security -->
+  <rect x="600" y="778" width="520" height="150" rx="8" fill="#1e293b" fill-opacity="0.7" stroke="#ef4444" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="620" y="802" fill="#f87171" font-size="15" font-weight="700">🔐 security/</text>
+  <text x="780" y="802" fill="#94a3b8" font-size="12">→ depende de core</text>
+  <text x="640" y="832" fill="#e2e8f0" font-size="13" font-family="'JetBrains Mono', 'Fira Code', monospace">
+    <tspan x="640" dy="0">├── config/</tspan>
+    <tspan x="840" dy="0" fill="#64748b" font-size="11">SecurityConfig (FilterChain)</tspan>
+    <tspan x="640" dy="22">├── jwt/</tspan>
+    <tspan x="840" dy="0" fill="#64748b" font-size="11">TokenProvider, AuthFilter</tspan>
+    <tspan x="640" dy="22">└── userdetails/</tspan>
+    <tspan x="840" dy="0" fill="#64748b" font-size="11">UserDetailsServiceImpl</tspan>
+  </text>
+
+  <!-- Module: web -->
+  <rect x="80" y="942" width="500" height="170" rx="8" fill="#1e293b" fill-opacity="0.7" stroke="#0ea5e9" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="100" y="966" fill="#38bdf8" font-size="15" font-weight="700">🌐 web/</text>
+  <text x="200" y="966" fill="#94a3b8" font-size="12">→ depende de core + security</text>
+  <text x="120" y="996" fill="#e2e8f0" font-size="13" font-family="'JetBrains Mono', 'Fira Code', monospace">
+    <tspan x="120" dy="0">├── controller/</tspan>
+    <tspan x="340" dy="0" fill="#64748b" font-size="11">Auth, User, Group, Merchant</tspan>
+    <tspan x="120" dy="22">├── dto/</tspan>
+    <tspan x="340" dy="0" fill="#64748b" font-size="11">request/ + response/</tspan>
+    <tspan x="120" dy="22">├── mapper/</tspan>
+    <tspan x="340" dy="0" fill="#64748b" font-size="11">MapStruct (Entity ↔ DTO)</tspan>
+    <tspan x="120" dy="22">├── exception/</tspan>
+    <tspan x="340" dy="0" fill="#64748b" font-size="11">GlobalExceptionHandler</tspan>
+    <tspan x="120" dy="22">└── config/</tspan>
+    <tspan x="340" dy="0" fill="#64748b" font-size="11">SwaggerConfig (OpenAPI)</tspan>
+  </text>
+
+  <!-- Module: app -->
+  <rect x="600" y="942" width="520" height="170" rx="8" fill="#1e293b" fill-opacity="0.7" stroke="#22c55e" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="620" y="966" fill="#4ade80" font-size="15" font-weight="700">🚀 app/</text>
+  <text x="720" y="966" fill="#94a3b8" font-size="12">→ bootável (depende de todos)</text>
+  <text x="640" y="996" fill="#e2e8f0" font-size="13" font-family="'JetBrains Mono', 'Fira Code', monospace">
+    <tspan x="640" dy="0">├── Application.java</tspan>
+    <tspan x="900" dy="0" fill="#64748b" font-size="11">@SpringBootApplication</tspan>
+    <tspan x="640" dy="22">├── config/</tspan>
+    <tspan x="900" dy="0" fill="#64748b" font-size="11">CorsConfig, WebConfig</tspan>
+    <tspan x="640" dy="22">├── application.yml</tspan>
+    <tspan x="900" dy="0" fill="#64748b" font-size="11">+ dev/prod profiles</tspan>
+    <tspan x="640" dy="22">├── db/migration/</tspan>
+    <tspan x="900" dy="0" fill="#64748b" font-size="11">Flyway (V1__, V2__, V3__)</tspan>
+    <tspan x="640" dy="22">└── test/</tspan>
+    <tspan x="900" dy="0" fill="#64748b" font-size="11">Testes de integração</tspan>
+  </text>
+
+  <!-- Backend extra files -->
+  <text x="100" y="1140" fill="#e2e8f0" font-size="14" font-family="'JetBrains Mono', 'Fira Code', monospace">
+    <tspan x="100" dy="0">├── pom.xml</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="12">Parent POM (dependencyManagement, módulos, versões)</tspan>
+    <tspan x="100" dy="24">├── Dockerfile</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="12">Build do módulo app</tspan>
+    <tspan x="100" dy="24">└── CLAUDE.md</tspan>
+    <tspan x="380" dy="0" fill="#64748b" font-size="12">Convenções específicas do backend</tspan>
+  </text>
+
+  <!-- ========== ROOT FILES ========== -->
+  <rect x="60" y="1220" width="1080" height="160" rx="10" fill="#334155" fill-opacity="0.5" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.3"/>
+  <rect x="60" y="1220" width="1080" height="36" rx="10" fill="#f59e0b" fill-opacity="0.15"/>
+  <text x="90" y="1244" fill="#fbbf24" font-size="16" font-weight="700">📄 Arquivos da Raiz</text>
+
+  <text x="100" y="1280" fill="#e2e8f0" font-size="14" font-family="'JetBrains Mono', 'Fira Code', monospace">
+    <tspan x="100" dy="0">├── docker-compose.yml</tspan>
+    <tspan x="420" dy="0" fill="#64748b" font-size="12">PostgreSQL + Redis + API</tspan>
+    <tspan x="100" dy="26">├── CLAUDE.md</tspan>
+    <tspan x="420" dy="0" fill="#64748b" font-size="12">Instruções gerais (visão geral, credenciais, URLs)</tspan>
+    <tspan x="100" dy="26">├── README.md</tspan>
+    <tspan x="420" dy="0" fill="#64748b" font-size="12">Documentação do projeto</tspan>
+    <tspan x="100" dy="26">└── meu-saas.code-workspace</tspan>
+    <tspan x="420" dy="0" fill="#64748b" font-size="12">VSCode Multi-root Workspace</tspan>
+  </text>
+
+  <!-- ========== DEPENDENCY GRAPH ========== -->
+  <rect x="60" y="1400" width="1080" height="150" rx="10" fill="#1e293b" stroke="#6366f1" stroke-width="1" stroke-opacity="0.4"/>
+  <rect x="60" y="1400" width="1080" height="32" rx="10" fill="#6366f1" fill-opacity="0.2"/>
+  <text x="90" y="1422" fill="#a5b4fc" font-size="14" font-weight="700">🔗 Grafo de Dependências entre Módulos Maven</text>
+
+  <!-- Dependency boxes -->
+  <rect x="480" y="1442" width="120" height="30" rx="6" fill="#22c55e" fill-opacity="0.3" stroke="#4ade80" stroke-width="1"/>
+  <text x="540" y="1462" text-anchor="middle" fill="#4ade80" font-size="12" font-weight="700">app</text>
+
+  <!-- Arrows down from app -->
+  <line x1="500" y1="1472" x2="200" y2="1500" stroke="#475569" stroke-width="1.5"/>
+  <line x1="520" y1="1472" x2="420" y2="1500" stroke="#475569" stroke-width="1.5"/>
+  <line x1="560" y1="1472" x2="660" y2="1500" stroke="#475569" stroke-width="1.5"/>
+  <line x1="580" y1="1472" x2="880" y2="1500" stroke="#475569" stroke-width="1.5"/>
+
+  <!-- Middle layer -->
+  <rect x="120" y="1500" width="160" height="28" rx="6" fill="#0ea5e9" fill-opacity="0.3" stroke="#38bdf8" stroke-width="1"/>
+  <text x="200" y="1518" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="700">web</text>
+
+  <rect x="340" y="1500" width="160" height="28" rx="6" fill="#8b5cf6" fill-opacity="0.3" stroke="#a78bfa" stroke-width="1"/>
+  <text x="420" y="1518" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="700">infrastructure</text>
+
+  <rect x="580" y="1500" width="160" height="28" rx="6" fill="#ef4444" fill-opacity="0.3" stroke="#f87171" stroke-width="1"/>
+  <text x="660" y="1518" text-anchor="middle" fill="#f87171" font-size="12" font-weight="700">security</text>
+
+  <!-- Arrows down to core -->
+  <line x1="200" y1="1528" x2="540" y2="1542" stroke="#475569" stroke-width="1.5"/>
+  <line x1="420" y1="1528" x2="540" y2="1542" stroke="#475569" stroke-width="1.5"/>
+  <line x1="660" y1="1528" x2="540" y2="1542" stroke="#475569" stroke-width="1.5"/>
+
+  <!-- Core -->
+  <rect x="470" y="1540" width="140" height="28" rx="6" fill="#f59e0b" fill-opacity="0.3" stroke="#fbbf24" stroke-width="1"/>
+  <text x="540" y="1558" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="700">core</text>
+
+  <!-- Tech badge: web → security dependency -->
+  <rect x="800" y="1500" width="280" height="28" rx="6" fill="#334155"/>
+  <text x="940" y="1518" text-anchor="middle" fill="#94a3b8" font-size="11">web → core + security (anotações REST)</text>
+
+  <!-- Footer -->
+  <text x="600" y="1575" text-anchor="middle" fill="#475569" font-size="11">Gerado para o curso AI Dev Workshop — Estrutura SaaS Full Stack Template</text>
+</svg>

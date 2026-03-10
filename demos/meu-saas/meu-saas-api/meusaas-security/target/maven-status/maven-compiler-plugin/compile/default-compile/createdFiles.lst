@@ -1,0 +1,7 @@
+com/minhaempresa/meusaas/security/userdetails/CustomUserDetails.class
+com/minhaempresa/meusaas/security/userdetails/UserDetailsServiceImpl.class
+com/minhaempresa/meusaas/security/jwt/JwtTokenProvider.class
+com/minhaempresa/meusaas/security/jwt/JwtConfig.class
+com/minhaempresa/meusaas/security/jwt/JwtAuthenticationFilter.class
+com/minhaempresa/meusaas/security/config/SecurityConfig.class
+com/minhaempresa/meusaas/security/SecurityUtils.class

@@ -1,0 +1,3 @@
+com/minhaempresa/meusaas/infrastructure/tenant/TenantAspect.class
+com/minhaempresa/meusaas/infrastructure/tenant/TenantContext.class
+com/minhaempresa/meusaas/infrastructure/cache/RedisConfig.class

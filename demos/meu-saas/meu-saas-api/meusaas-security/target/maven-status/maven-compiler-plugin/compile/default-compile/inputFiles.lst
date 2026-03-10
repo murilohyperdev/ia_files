@@ -1,0 +1,7 @@
+/Users/eleno/Development/elenobdo/ai-project-demo/meu-saas/meu-saas-api/meusaas-security/src/main/java/com/minhaempresa/meusaas/security/SecurityUtils.java
+/Users/eleno/Development/elenobdo/ai-project-demo/meu-saas/meu-saas-api/meusaas-security/src/main/java/com/minhaempresa/meusaas/security/config/SecurityConfig.java
+/Users/eleno/Development/elenobdo/ai-project-demo/meu-saas/meu-saas-api/meusaas-security/src/main/java/com/minhaempresa/meusaas/security/jwt/JwtAuthenticationFilter.java
+/Users/eleno/Development/elenobdo/ai-project-demo/meu-saas/meu-saas-api/meusaas-security/src/main/java/com/minhaempresa/meusaas/security/jwt/JwtConfig.java
+/Users/eleno/Development/elenobdo/ai-project-demo/meu-saas/meu-saas-api/meusaas-security/src/main/java/com/minhaempresa/meusaas/security/jwt/JwtTokenProvider.java
+/Users/eleno/Development/elenobdo/ai-project-demo/meu-saas/meu-saas-api/meusaas-security/src/main/java/com/minhaempresa/meusaas/security/userdetails/CustomUserDetails.java
+/Users/eleno/Development/elenobdo/ai-project-demo/meu-saas/meu-saas-api/meusaas-security/src/main/java/com/minhaempresa/meusaas/security/userdetails/UserDetailsServiceImpl.java
